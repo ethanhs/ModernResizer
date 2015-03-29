@@ -2,9 +2,9 @@ ModernResizer - v0.1
 
 This program is freeware. It allows you to resize and move the Windows 8(or 8.1) start menu. You have 2 options to run it:
 
-1. Command line with arguments. Just run "Resize -h" in the folder containing the program. It will print out the help
+1. Command line with arguments. Just run "ResizeStart -h" in the folder containing the program. It will print out the help
 
-2. With the user interface. Just double click the program, or run "Resize" in  the folder containing the program.
+2. With the user interface. Just double click the program, or run "ResizeStart" in  the folder containing the program.
 
 This program is licensed under the BSD license (below).
 
