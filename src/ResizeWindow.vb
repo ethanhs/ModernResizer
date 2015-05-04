@@ -1,3 +1,4 @@
+'All of the needed imports to get this done. I think (maybe unnecessary imports?)
 Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CompilerServices
 Imports System
@@ -9,9 +10,12 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Threading
 Imports System.Windows.Forms
+ 
 Namespace ModernStart
 	Public Class Resize
+		'Possibly unnecessary Inherits?
 		Inherits Form
+		'This is so that later we can reference the style
 		Public Enum WindowStyles As Long
 			WS_OVERLAPPED
 			WS_POPUP = 2147483648L
@@ -67,33 +71,34 @@ Namespace ModernStart
 			WS_EX_COMPOSITED = 33554432L
 			WS_EX_NOACTIVATE = 67108864L
 		End Enum
+		'These styles are for GetWindowLong
 		Private GWL_STYLE As Integer
 		Private GWL_EXSTYLE As Integer
-		
+		'Get the title of a window
 		Private  Declare Ansi Function GetWindowText Lib "user32" Alias "GetWindowTextA" (hwnd As Integer, <MarshalAs(UnmanagedType.VBByRefStr)> ByRef lpString As String, cch As Integer) As Integer
-
+		'Get the handle (as an Integer) of the Window under a point
 		Private  Declare Function WindowFromPoint Lib "user32.dll" (xPoint As Integer, yPoint As Integer) As Integer
-
+		'No explanation needed
 		Public  Declare Auto Function GetForegroundWindow Lib "user32.dll" () As Integer
-
+		'Get parent of a window/control
 		Private  Declare Function GetAncestor Lib "user32.dll" (hwnd As Integer, gaFlags As UInteger) As Integer
-
+		'Set the controlling window (very useful!)
 		Public  Declare Auto Function SetParent Lib "User32" (hWndChild As IntPtr, hWndParent As IntPtr) As IntPtr
-
+		'Maybe needed if we want hotkeys (or in IronPython?)
 		Public  Declare Auto Function GetAsyncKeyState Lib "user32.dll" (vkey As Integer) As Short
-
+		'Self explanatory, the last arg is a boolean to repaint the window
 		Private Declare Function MoveWindow Lib "user32.dll" (hWnd As IntPtr, X As Integer, Y As Integer, nWidth As Integer, nHeight As Integer, bRepaint As Boolean) As Boolean
-
+		'Not used, garbage from decompilation
 		Public Declare Auto Function GetWindow Lib "user32" (hwnd As IntPtr, uCmd As Integer) As IntPtr
-
+		'Garbage from decompilation
 		Private Declare Auto Function FindWindow Lib "user32.dll" (lpClassName As String, lpWindowName As String) As Integer
-
+		'Just uses class instead of hwnd
 		Private Declare Auto Function FindWindowByClass Lib "user32.dll" Alias "FindWindow" (lpClassName As String, zero As IntPtr) As IntPtr
-
+		'Ditto for caption
 		Private Declare Auto Function FindWindowByCaption Lib "user32.dll" Alias "FindWindow" (zero As IntPtr, lpWindowName As String) As IntPtr
-
+		'Awesome useful bit
 		Private Declare Function FindWindowEx Lib "user32.dll" (parentHwnd As IntPtr, childAfterHwnd As IntPtr, className As IntPtr, windowText As String) As IntPtr
-		
+		'Default 800*600 movees to 20,20.
 		Public Sub ResizeWindow(winhandle As Integer)
 			GWL_STYLE = -16
 			GWL_EXSTYLE = -20
@@ -103,13 +108,16 @@ Namespace ModernStart
 			Dim value As Resize.WindowStyles = CType(276824064L, Resize.WindowStyles)
 			Me.SetWindowLong(CType(winhandle, IntPtr), GWL_STYLE, CType((CLng(value)), IntPtr))
 		End Sub
-
+		'This is the main function, 
 		Public Sub ResizeStartWindow(winhandle As Integer, xwidth As Integer, xheight As Integer, xtop As Integer, xleft As Integer)
 			GWL_STYLE = -16
 			GWL_EXSTYLE = -20
+			'winhandle is zero if we want to find the start menu, otherwise, specify a handle as an Integer
 			If Not winhandle Then
+				'This should find the start menu. It may be that this is language specific.
 				winhandle= FindWindow("ImmersiveLauncher", "Start menu")
 			End If
+			'Once found (if found), move and resize (repaint=True!)
 			MoveWindow(CType(winhandle, IntPtr), xleft, xtop, xwidth, xheight, True)
 			Dim windowStyles As Resize.WindowStyles = CType(GetWindowLong(CType(winhandle, IntPtr), GWL_STYLE), Resize.WindowStyles)
 			Dim windowStyles2 As Resize.WindowStyles = CType(GetWindowLong(CType(winhandle, IntPtr), GWL_EXSTYLE), Resize.WindowStyles)
