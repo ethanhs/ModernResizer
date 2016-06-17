@@ -10,7 +10,7 @@ This program is freeware. It allows you to resize and move the Windows 8(or 8.1)
 
 This program is licensed under the BSD license (below).
 
-Copyright (c) 2015,Ethan Smith (aka IronManMark20)
+Copyright (c) 2015,Ethan Smith (aka ethanhs)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
