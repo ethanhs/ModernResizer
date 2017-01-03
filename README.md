@@ -2,6 +2,11 @@
 
 I no longer am using Windows 8.x, so I cannot support this program. If you have questions, please feel free to email me, but I will not promise a solution. This code will not work on Windows 10. The new XAML based start menu is much more difficult to modify, so I at this time do not see a means of updating for Windows 10.
 
+That being said, if you are still using Windows 8.1, you it if you wish.
+
+![screenshot](/screenshot-198.png)
+
+
 This program is freeware. It allows you to resize and move the Windows 8(or 8.1) start menu. You have 2 options to run it:
 
 1. Command line with arguments. Just run "ResizeStart -h" in the folder containing the program. It will print out the help
